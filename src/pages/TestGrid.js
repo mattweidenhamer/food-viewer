@@ -1,21 +1,33 @@
-import { Typography, Grid} from '@mui/material'
+import { Typography, Grid, Card, CardContent, Paper} from '@mui/material'
 import React from 'react'
 
 const TestGrid = () => {
+    const people = [
+        "Matt", "Nill", "Amelia", "Emilia", "Puppers", "Nill Bye"
+    ]
 
     return  (
         <>
-        <Grid container>
-            <Grid item xs={6} md={2}>Hi!</Grid>
-            <Grid item xs={6} md={2}>Hello!</Grid>
-            <Grid item xs={6} md={2}>This is a test to make it as rowed as possible.</Grid>
-            <Grid item xs={6} md={2}>Expanding test</Grid>
-            <Grid item xs={6} md={2}>Expanding test 2</Grid>
-            <Grid item xs={6} md={2}>Expanding test 3</Grid>
-            <Grid item xs={6} md={2}>Expanding test 4</Grid>
-        </Grid>
+        <Paper>
+            <Grid container>
+                {
+                    people.map(
+                        (person) => {
+                            return (
+                                <Card>
+                                    <CardContent>
+                                        <Grid item xs={6} md={2}>{person}</Grid>
+                                    </CardContent>
+                                </Card>
+                            )
+                        }
+                    )
+                }
 
-            <Typography>I am the test grid!</Typography>
+            </Grid>
+        </Paper>
+
+            <Typography>I am outside the test grid!</Typography>
         </>
     )
 }
