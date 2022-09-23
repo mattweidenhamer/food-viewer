@@ -8,8 +8,8 @@ const TestGrid = () => {
 
     return  (
         <>
-        <Paper>
-            <Grid container>
+        <Paper sx={{pt : 2}}>
+            <Grid container spacing={2}>
                 {
                     people.map(
                         (person) => {
