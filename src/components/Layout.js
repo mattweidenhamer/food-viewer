@@ -5,12 +5,25 @@ import TestGrid from '../pages/TestGrid';
 import Search from '../pages/Search';
 import SearchIcon from '@mui/icons-material/Search';
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
+import yelp from '../api/yelp';
 
 const Layout= () => {
-    const [searchText, setSearchText] =useState("Defaulted Statetext")
+    const [searchText, setSearchText] =useState("This is a Default State Text")
+    const [results, setResults] = useState([])
+    const searchApi = async () => {
+        const response = await yelp ('20176', 'mexican')
+        console.log(response.data.businesses)
+        setResults(response.data.businesses)
+    }
+
+    const doSearch = (e) => {
+        setSearchText(e)
+        searchApi()
+    }
+
     return  (
         <>
-        <Paper sx={{backgroundColor : "#8F8F8F", pb: 2}}>
+        <Paper sx={{backgroundColor : "#FFFFFF", pb: 2}}>
             <BrowserRouter>
                 <Box sx={{ flexGrow: 1 }}>
                     <AppBar position="static">
@@ -29,7 +42,7 @@ const Layout= () => {
                             onKeyPress={
                                 (e) => {
                                 if(e.key === "Enter"){
-                                    setSearchText(e.target.value)
+                                    doSearch(e.target.value)
                                 }  
                                 }
                             }
@@ -60,7 +73,7 @@ const Layout= () => {
                 <Routes>
                     <Route exact path='/' element={<TestGrid/>}></Route>
                     <Route exact path='/testgrid' element={<TestGrid/>}></Route>
-                    <Route exact path='/search' element={<Search/>}></Route>
+                    <Route exact path='/search' element={<Search searchResults={results}/>}></Route>
                 </Routes>
             </BrowserRouter>
             <Typography>
