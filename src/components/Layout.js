@@ -8,22 +8,23 @@ import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import yelp from '../api/yelp';
 
 const Layout= () => {
-    const [searchText, setSearchText] =useState("This is a Default State Text")
+    const [searchText, setSearchText] =useState("Chinese")
     const [results, setResults] = useState([])
-    const searchApi = async () => {
-        const response = await yelp ('20176', 'mexican')
+
+    const searchApi = async (e) => {
+        const response = await yelp ('20176', e)
         console.log(response.data.businesses)
         setResults(response.data.businesses)
     }
 
     const doSearch = (e) => {
         setSearchText(e)
-        searchApi()
+        searchApi(e)
     }
 
     return  (
         <>
-        <Paper sx={{backgroundColor : "#FFFFFF", pb: 2}}>
+        <Paper sx={{backgroundColor : "#CFCFCF", pt: 2, pb: 2}}>
             <BrowserRouter>
                 <Box sx={{ flexGrow: 1 }}>
                     <AppBar position="static">
@@ -51,13 +52,10 @@ const Layout= () => {
                             inputProps={{
                                 startAdornment: (
                                     <InputAdornment position="Start">
-                                        <SearchIcon/>
+                                        <SearchIcon />
                                     </InputAdornment>
-
                                 )
-                            }
-                                
-                            }
+                            }}
                             />
                         </Typography>
                         <Button color="inherit">Login</Button>
@@ -68,16 +66,17 @@ const Layout= () => {
                 <Button variant="outlined" component={Link} to="/search">Search</Button>
 
                 <Button variant="outlined" component={Link} to="/testgrid">Test Grid</Button>
+            
 
                 <Typography variant="H6">Your search result for {searchText}</Typography>
                 <Routes>
-                    <Route exact path='/' element={<TestGrid/>}></Route>
+                    <Route exact path='/' element={<Search searchResults={results}/>}></Route>
                     <Route exact path='/testgrid' element={<TestGrid/>}></Route>
                     <Route exact path='/search' element={<Search searchResults={results}/>}></Route>
                 </Routes>
             </BrowserRouter>
             <Typography>
-                I hope this is acceptable, I thought this was slightly more aestetically pleasing.
+                This is a silly place to put a navigation option
             </Typography>
         </Paper>
         </>
