@@ -54,7 +54,7 @@ const Layout= () => {
                                 }
                             }
                             label="Search"
-                            variant="outlined"
+                            variant="outlined"y
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
