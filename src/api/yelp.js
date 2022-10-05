@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default async (location, term) => {
+const yelp = async (location, term) => {
     const response = await axios({
         method : 'get',
         url : `https://yelp-backend.netlify.app/.netlify/functions/search?location=${location}&term=${term}`
@@ -8,4 +8,4 @@ export default async (location, term) => {
 
     return response
 }
-
+export default yelp

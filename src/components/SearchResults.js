@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Grid, Card, CardContent, CardMedia, CardActions, Button} from "@mui/material";
+import { Typography, Grid, Card, CardContent, CardMedia} from "@mui/material";
 
 const SearchResults = ({food, foodTitle}) => {
 

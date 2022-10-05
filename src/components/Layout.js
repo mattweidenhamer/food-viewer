@@ -28,8 +28,6 @@ const Layout= () => {
             searchApi("Mexican Food")
     }, [])
 
-
-
     return  (
         <>
         <Paper sx={{backgroundColor : "#CFCFCF", pt: 2, pb: 2}}>
