@@ -1,11 +1,11 @@
 import { Typography, Box, AppBar, Toolbar, Button, IconButton, TextField, InputAdornment, Paper } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import React, {useState, useEffect} from 'react';
-import TestGrid from '../pages/TestGrid';
 import Search from '../pages/Search';
 import SearchIcon from '@mui/icons-material/Search';
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import yelp from '../api/yelp';
+import Detail from '../pages/details';
 
 const Layout= () => {
     const [searchText, setSearchText] =useState("Mexican")
@@ -71,14 +71,13 @@ const Layout= () => {
 
                 <Button variant="outlined" component={Link} sx = {{pr: 2}}to="/search">Search</Button>
 
-                <Button variant="outlined" component={Link} sx = {{pr: 2}}to="/testgrid">Test Grid</Button>
                 <p/>
             
 
                 <Typography variant="H6">You searched for {searchText} food</Typography>
                 <Routes>
                     <Route exact path='/' element={<Search searchResults={results}/>}></Route>
-                    <Route exact path='/testgrid' element={<TestGrid/>}></Route>
+                    <Route exact path='/detail' element={<Detail/>}></Route>
                     <Route exact path='/search' element={<Search searchResults={results}/>}></Route>
                 </Routes>
             </BrowserRouter>
