@@ -54,6 +54,9 @@ web_modules/
 # Optional eslint cache
 .eslintcache
 
+# API keys
+secret.json
+
 # Optional stylelint cache
 .stylelintcache
 

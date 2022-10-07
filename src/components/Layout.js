@@ -2,25 +2,38 @@ import { Typography, Box, AppBar, Toolbar, Button, IconButton, TextField, InputA
 import MenuIcon from '@mui/icons-material/Menu'
 import React, {useState, useEffect} from 'react';
 import Search from '../pages/Search';
-import SearchIcon from '@mui/icons-material/Search';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import yelp from '../api/yelp';
 import Detail from '../pages/details';
+import MapPage from '../pages/map';
 
 const Layout= () => {
     const [searchText, setSearchText] =useState("Mexican")
+    const [searchZip, setSearchZip] = useState("20176")
     const [results, setResults] = useState([])
     
 
     const searchApi = async (e) => {
-        const response = await yelp ('20176', e)
+        const response = await yelp (searchZip, e)
         console.log(response.data.businesses)
+        setResults(response.data.businesses)
+    }
+
+    const searchApiZip = async (e) => {
+        const response = await yelp (e, searchText)
+        console.log(response.data.businesses) 
         setResults(response.data.businesses)
     }
 
     const doSearch = (e) => {
         setSearchText(e)
         searchApi(e)
+    }
+
+    const doZipSearch = (e) => {
+        setSearchZip(e)
+        searchApiZip(e)
     }
 
     useEffect(
@@ -58,7 +71,7 @@ const Layout= () => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <SearchIcon />
+                                        <FastfoodIcon />
                                     </InputAdornment>
                                 )
                             }}
@@ -70,14 +83,16 @@ const Layout= () => {
                 </Box> 
 
                 <Button variant="outlined" component={Link} sx = {{pr: 2}}to="/search">Search</Button>
+                <Button variant="outlined" component={Link} sx = {{pr: 2}}to="/map">Map</Button>
 
                 <p/>
             
 
-                <Typography variant="H6">You searched for {searchText} food</Typography>
+                <Typography variant="H6">You searched for {searchText} food in {searchZip}</Typography>
                 <Routes>
                     <Route exact path='/' element={<Search searchResults={results}/>}></Route>
                     <Route exact path='/detail' element={<Detail/>}></Route>
+                    <Route exact path='/map' element={<MapPage searchResults={results}/>}></Route>
                     <Route exact path='/search' element={<Search searchResults={results}/>}></Route>
                 </Routes>
             </BrowserRouter>
