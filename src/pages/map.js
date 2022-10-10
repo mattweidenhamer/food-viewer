@@ -1,29 +1,52 @@
-import React from "react"
+import React from 'react'
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import APIkey from "./data/secret.json"
 import SearchResultMarkers from "../components/SearchResultMarkers"
 
+const containerStyle = {
+  width: '800px',
+  height: '400px'
+};
 
-const mapPage = ({searchResults}) => {
-    const defaultInfo = {
-        center: {
-            lat: searchResults[0]["coordinates"]["latitude"],
-            lng: searchResults[0]["coordinates"]["longitude"]
+function MapPage({searchResults}) {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: APIkey.APIkey
+  })
 
-        },
-        zoom: 10
-    }
-    return (
+  const center = {
+    lat: searchResults[0]["coordinates"]["latitude"],
+    lng: searchResults[0]["coordinates"]["longitude"]
+  };
 
-        <div style={{ height: '100vh', width: '100%' }}>
-            <googleMapReact
-             bootstrapURLKeys = {{key: APIkey}}
-             defaultCenter={defaultInfo.center}
-             defaultZoom = {defaultInfo.zoom}
-             >
-                <SearchResultMarkers places={searchResults}/>
-            </googleMapReact>
-        </div>
-    )
+  const [map, setMap] = React.useState(null)
+
+  const onLoad = React.useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+    setMap(map)
+  }, [])
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null)
+  }, [])
+
+  return isLoaded ? (
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={4}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        {
+            searchResults.map((value) => {
+                return <SearchResultMarkers place={value}/>
+            })
+        }
+
+      </GoogleMap>
+  ) : <></>
 }
 
-export default mapPage
+export default React.memo(MapPage)
