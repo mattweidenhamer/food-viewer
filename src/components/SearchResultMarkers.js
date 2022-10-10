@@ -1,15 +1,17 @@
 import React from "react";
 import { Typography, Card, CardContent, CardMedia} from "@mui/material";
 import { InfoWindow } from "@react-google-maps/api";
+import { getValue } from "@testing-library/user-event/dist/utils";
+import { Marker } from "@react-google-maps/api";
 
 
-const SearchResultMarkers = (place) => {
-    const location = {lat: place.coordinates.latitude, lat: place.coordinates.longitude};
+const SearchResultMarkers = ({place}) => {
+    const location = {lat: Number(place.coordinates.latitude), lng: Number(place.coordinates.longitude)};
 
     return(
         <>
-            <InfoWindow position={location}>
-                <Card sx={{ maxWidth: 345 }}>
+            <Marker position={location} label={place.name}/>
+                {/* <Card sx={{ maxWidth: 345 }}>
                     <CardMedia
                         component="img"
                         height="140"
@@ -28,14 +30,9 @@ const SearchResultMarkers = (place) => {
 
                         </Typography>
                     </CardContent>
-                    
-                    {/* <CardActions>
-                        <Button size="small">Share</Button>
-                        <Button size="small">Learn More</Button>
-                    </CardActions> */}
-                    
                 </Card>
-            </InfoWindow>
+            </InfoWindow> */
+            }
         </>
     )
 }
